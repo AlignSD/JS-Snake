@@ -2,7 +2,8 @@
 <html>
 
 <head>
-  <title>Snake Game</title>
+  <title>Snake Game by Evan Alioto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <link href="https://fonts.googleapis.com/css?family=Antic+Slab" rel="stylesheet">
   <link href="./style.css" rel="stylesheet">
 
@@ -18,12 +19,17 @@
   <canvas id="snakeboard" width="400" height="400"></canvas>
 
   <style>
+    body {
+      overflow: hidden;
+      touch-action: none;
+    }
     #snakeboard {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       z-index: 0;
+      touch-action: none;
     }
 
     #score {
@@ -71,6 +77,11 @@
   let dx = 10;
   // Vertical velocity
   let dy = 0;
+  // Touchscreen Vars
+  let touchStartX = 0;
+  let touchEndX = 0;
+  let touchStartY = 0;
+  let touchEndY = 0;
 
   let snake = [
     { x: 200, y: 200 },
@@ -92,6 +103,17 @@
 
   // listen for key presses
   document.addEventListener("keydown", change_direction)
+
+  document.addEventListener("touchstart", e => {
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+  })
+
+  document.addEventListener("touchend", e => {
+    touchEndX = e.changedTouches[0].screenX;
+    touchEndY = e.changedTouches[0].screenY;
+    handleGesture();
+  })
 
   // main function called repeatedly to keep the game running
   function main() {
@@ -208,6 +230,33 @@
     }
   }
 
+  function handleGesture() {
+    const goingUp = dy === -10;
+    const goingDown = dy === 10;
+    const goingRight = dx === 10;
+    const goingLeft = dx === -10;
+    // touch screen controls
+      if (touchEndX < touchStartX && (touchStartX - touchEndX) > (touchStartY - touchEndY) && (touchStartX - touchEndX) > (touchEndY - touchStartY) && !goingRight) { // need to figure out how to have it only accept the largest differential between the x and y axis
+        dx = -10;
+        dy = 0;
+        console.log("swiped left")
+      }
+      if (touchEndX > touchStartX && (touchEndX - touchStartX) > (touchStartY - touchEndY) && (touchEndX > touchStartX) > (touchEndY - touchStartY) &&!goingLeft) {
+        dx = 10;
+        dy = 0;
+        console.log("swiped Right")
+      }
+      if (touchEndY < touchStartY && (touchStartY - touchEndY) > (touchStartX - touchEndX) && (touchStartY - touchEndY) > (touchEndX - touchStartX) && !goingDown){
+        dx = 0;
+        dy = -10;
+        console.log("swiped Up")
+      } 
+      if (touchEndY > touchStartY && (touchEndY - touchStartY) > (touchStartX - touchEndX) && (touchEndY - touchStartY) > (touchEndX - touchStartX) && !goingUp){
+        dx = 0;
+        dy = 10;
+        console.log("swiped Down")
+      } 
+  }
 
   function moveSnake() {
 
