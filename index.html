@@ -236,7 +236,7 @@
     const goingRight = dx === 10;
     const goingLeft = dx === -10;
     // touch screen controls
-      if (touchendX < touchStartX && !goingRight) {
+      if (touchendX < touchStartX && (touchendX < touchStartX) > (touchendY < touchStartY) || (touchendY > touchStartY) && !goingRight) { // need to figure out how to have it only accept the largest differential between the x and y axis
         dx = -10;
         dy = 0;
         console.log("swiped left")
