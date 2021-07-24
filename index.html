@@ -78,10 +78,10 @@
   // Vertical velocity
   let dy = 0;
   // Touchscreen Vars
-  let touchstartX = 0;
-  let touchendX = 0;
-  let touchstartY = 0;
-  let touchendY = 0;
+  let touchStartX = 0;
+  let touchEndX = 0;
+  let touchStartY = 0;
+  let touchEndY = 0;
 
   let snake = [
     { x: 200, y: 200 },
@@ -110,8 +110,8 @@
   })
 
   document.addEventListener("touchend", e => {
-    touchendX = e.changedTouches[0].screenX;
-    touchendY = e.changedTouches[0].screenY;
+    touchEndX = e.changedTouches[0].screenX;
+    touchEndY = e.changedTouches[0].screenY;
     handleGesture();
   })
 
@@ -236,22 +236,22 @@
     const goingRight = dx === 10;
     const goingLeft = dx === -10;
     // touch screen controls
-      if (touchendX < touchStartX && (touchendX < touchStartX) > (touchendY < touchStartY) || (touchendY > touchStartY) && !goingRight) { // need to figure out how to have it only accept the largest differential between the x and y axis
+      if (touchEndX < touchStartX && (touchStartX - touchEndX) > (touchStartY - touchEndY) && (touchStartX - touchEndX) > (touchEndY - touchStartY) && !goingRight) { // need to figure out how to have it only accept the largest differential between the x and y axis
         dx = -10;
         dy = 0;
         console.log("swiped left")
       }
-      if (touchendX > touchStartX && !goingLeft) {
+      if (touchEndX > touchStartX && !goingLeft) {
         dx = 10;
         dy = 0;
         console.log("swiped Right")
       }
-      if (touchendY < touchStartY && !goingDown){
+      if (touchEndY < touchStartY && !goingDown){
         dx = 0;
         dy = -10;
         console.log("swiped Up")
       } 
-      if (touchendY > touchStartY && !goingUp){
+      if (touchEndY > touchStartY && !goingUp){
         dx = 0;
         dy = 10;
         console.log("swiped Down")
