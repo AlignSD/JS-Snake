@@ -241,17 +241,17 @@
         dy = 0;
         console.log("swiped left")
       }
-      if (touchEndX > touchStartX && !goingLeft) {
+      if (touchEndX > touchStartX && (touchEndX - touchStartX) > (touchStartY - touchEndY) && (touchEndX > touchStartX) > (touchEndY - touchStartY) &&!goingLeft) {
         dx = 10;
         dy = 0;
         console.log("swiped Right")
       }
-      if (touchEndY < touchStartY && !goingDown){
+      if (touchEndY < touchStartY && (touchStartY - touchEndY) > (touchStartX - touchEndX) && (touchStartY - touchEndY) > (touchEndX - touchStartX) && !goingDown){
         dx = 0;
         dy = -10;
         console.log("swiped Up")
       } 
-      if (touchEndY > touchStartY && !goingUp){
+      if (touchEndY > touchStartY && (touchEndY - touchStartY) > (touchStartX - touchEndX) && (touchEndY - touchStartY) > (touchEndX - touchStartX) && !goingUp){
         dx = 0;
         dy = 10;
         console.log("swiped Down")
