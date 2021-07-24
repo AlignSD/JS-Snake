@@ -8,6 +8,7 @@ Little JavaScript based Snake game
 
 - Added Mobile Support! User can now use swipe gestures to control the snake.
 - Zoom functionality and screen size optimized for mobile use. This allows users to play with gestures without having the screen zoom in and out and scroll.
+- Added media queries to adjust game board size on smaller devices.
 
 ## General
 
